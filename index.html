@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pattabi Rama M — Backend Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Martian+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#080806; --bg2:#0d0d0a; --bg3:#111110; --sur:#171714;
+      --red:#b83228; --red2:#d04035;
+      --rdim:rgba(184,50,40,.09); --rbdr:rgba(184,50,40,.22);
+      --fg:#ece6dc; --fg2:#9e9890; --fg3:#5a524c; --fg4:#2e2b27;
+      --serif:'Cormorant Garamond',Georgia,serif;
+      --sans:'DM Sans',system-ui,sans-serif;
+      --mono:'Martian Mono','Courier New',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;cursor:none}
+
+    /* cursor */
+    #c{position:fixed;pointer-events:none;z-index:9999;width:7px;height:7px;background:var(--red2);border-radius:50%;transform:translate(-50%,-50%)}
+    #cr{position:fixed;pointer-events:none;z-index:9998;width:26px;height:26px;border:1px solid rgba(208,64,53,.45);border-radius:50%;transform:translate(-50%,-50%);transition:width .22s,height .22s,border-color .22s}
+    #cr.on{width:40px;height:40px;border-color:var(--red2)}
+
+    /* grain */
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+      opacity:.03}
+
+    /* nav */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 52px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(18px) saturate(160%);background:rgba(8,8,6,.82);border-bottom:1px solid rgba(255,255,255,.035)}
+    .nlogo{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--fg);letter-spacing:.01em}
+    .nlogo span{color:var(--red2)}
+    .nlinks{display:flex;gap:34px;list-style:none}
+    .nlinks a{font-family:var(--mono);font-size:10px;color:var(--fg3);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
+    .nlinks a:hover,.nlinks a.on{color:var(--fg)}
+    section{position:relative;z-index:1}
+
+    /* hero */
+    #hero{min-height:100vh;max-width:1280px;margin:0 auto;padding:0 52px;display:grid;grid-template-rows:1fr auto}
+    .hero-body{display:flex;flex-direction:column;justify-content:center;padding-top:96px}
+    .hero-name{font-family:var(--serif);font-style:italic;font-size:clamp(68px,10vw,144px);line-height:.88;letter-spacing:-.04em;opacity:0;animation:up .8s ease .1s forwards}
+    .hero-name .dim{color:var(--fg3)}
+    .hero-name .red{color:var(--red2)}
+    .hero-tag{margin-top:22px;font-family:var(--mono);font-size:11px;color:var(--fg3);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:12px;opacity:0;animation:up .7s ease .3s forwards}
+    .hero-tag::before{content:'';display:block;width:28px;height:1px;background:var(--red);flex-shrink:0}
+    .hero-intro{margin-top:38px;max-width:620px;opacity:0;animation:up .75s ease .5s forwards}
+    .hero-intro p{font-size:16.5px;line-height:1.82;color:var(--fg2);font-weight:300}
+    .hero-intro p+p{margin-top:14px}
+    .hero-intro strong{color:var(--fg);font-weight:500}
+    .hero-intro em{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--fg)}
+    .hero-cta{margin-top:42px;display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:up .7s ease .68s forwards}
+    .btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:12px 26px;border-radius:1px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;cursor:none}
+    .btn-red{background:var(--red);color:var(--fg)}
+    .btn-red:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 32px rgba(184,50,40,.28)}
+    .btn-ghost{border:1px solid var(--fg4);color:var(--fg3)}
+    .btn-ghost:hover{border-color:var(--fg3);color:var(--fg);transform:translateY(-2px)}
+    .hero-foot{padding-bottom:44px;display:flex;justify-content:space-between;align-items:flex-end;opacity:0;animation:up .7s ease .85s forwards}
+    .scroll-hint{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:9px;color:var(--fg3);letter-spacing:.14em;text-transform:uppercase}
+    .sline{width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--red));animation:spulse 2.2s ease-in-out infinite}
+    @keyframes spulse{0%,100%{opacity:.25;transform:scaleY(.5);transform-origin:bottom}50%{opacity:1;transform:scaleY(1)}}
+    .avail{font-family:var(--mono);font-size:10px;color:var(--fg3);display:flex;align-items:center;gap:8px;letter-spacing:.08em}
+    .adot{width:6px;height:6px;background:#4caf7d;border-radius:50%;animation:bl 2.4s ease-in-out infinite}
+    @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+
+    /* section shared */
+    .wrap{max-width:1280px;margin:0 auto;padding:104px 52px}
+    .sh{display:flex;align-items:baseline;gap:16px;margin-bottom:64px}
+    .sn{font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:.14em;text-transform:uppercase}
+    .st{font-family:var(--serif);font-style:italic;font-size:clamp(38px,4.5vw,56px);letter-spacing:-.025em;line-height:1}
+    .sl{flex:1;height:1px;background:rgba(255,255,255,.04);margin-left:6px;align-self:center}
+
+    /* experience */
+    #experience{background:var(--bg2)}
+    .exp-stack{display:flex;flex-direction:column;gap:2px}
+    .exp-card{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:2px;overflow:hidden;transition:border-color .3s}
+    .exp-card:hover{border-color:rgba(184,50,40,.18)}
+    .exp-top{padding:32px 38px 0;display:grid;grid-template-columns:1fr auto;gap:12px}
+    .exp-pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9.5px;color:var(--red2);background:var(--rdim);border:1px solid var(--rbdr);border-radius:100px;padding:4px 12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;width:fit-content}
+    .exp-pill-dot{width:5px;height:5px;background:var(--red2);border-radius:50%;animation:bl 2s ease-in-out infinite}
+    .exp-role{font-size:21px;font-weight:600;letter-spacing:-.02em}
+    .exp-co{font-family:var(--mono);font-size:11px;color:var(--fg3);margin-top:5px}
+    .exp-when{font-family:var(--mono);font-size:10px;color:var(--fg3);text-align:right;white-space:nowrap;flex-shrink:0;padding-top:4px}
+    .exp-mods{padding:0 38px;display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+    .mtag{font-family:var(--mono);font-size:10px;padding:4px 11px;border-radius:1px;background:rgba(255,255,255,.03);color:var(--fg2);border:1px solid rgba(255,255,255,.06)}
+    .mtag.hi{background:var(--rdim);color:var(--fg);border-color:var(--rbdr)}
+    .exp-body{padding:18px 38px 32px}
+    .exp-ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+    .exp-ul li{font-size:13.5px;color:var(--fg2);line-height:1.78;padding-left:22px;position:relative}
+    .exp-prose p{font-size:14px;color:var(--fg2);line-height:1.82;font-weight:300}
+    .exp-prose p+p{margin-top:14px}
+    .exp-prose b{color:var(--fg);font-weight:500}
+    .exp-ul li b{color:var(--fg);font-weight:500}
+    .exp-ul li em{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--fg)}
+
+    /* projects */
+    .pstack{display:flex;flex-direction:column;gap:2px}
+    .pcard{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:2px;padding:52px;transition:border-color .3s;cursor:none;position:relative;overflow:hidden}
+    .pcard::after{content:'';position:absolute;inset:0;background:radial-gradient(700px at var(--mx,50%) var(--my,50%),rgba(184,50,40,.042),transparent 65%);opacity:0;transition:opacity .5s;pointer-events:none}
+    .pcard:hover::after{opacity:1}
+    .pcard:hover{border-color:rgba(184,50,40,.14)}
+    .pgrid{display:grid;grid-template-columns:1fr 310px;gap:56px;align-items:start}
+    .pgrid.flip{grid-template-columns:310px 1fr}
+    .pgrid.flip .pmeta{order:-1}
+    .phook{font-family:var(--mono);font-size:10px;color:var(--red2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+    .phook::before{content:'';display:block;width:20px;height:1px;background:var(--red)}
+    .ptitle{font-family:var(--serif);font-style:italic;font-size:clamp(28px,3.5vw,44px);letter-spacing:-.02em;line-height:1.02;margin-bottom:8px}
+    .psub{font-family:var(--mono);font-size:10.5px;color:var(--fg3);margin-bottom:26px;line-height:1.55}
+    .ptext{font-size:14px;line-height:1.82;color:var(--fg2);margin-bottom:14px}
+    .ptext b{color:var(--fg);font-weight:500}
+    .ptext em{font-family:var(--serif);font-style:italic;font-size:15.5px;color:var(--fg)}
+    .phls{display:flex;flex-direction:column;gap:12px;margin:22px 0}
+    .phl{display:flex;gap:14px;font-size:13px;color:var(--fg2);line-height:1.68}
+    .phl-ic{font-family:var(--mono);font-size:11px;color:var(--red2);flex-shrink:0;min-width:18px;padding-top:1px}
+    .phl b{color:var(--fg);font-weight:500}
+    .pcall{background:var(--rdim);border:1px solid var(--rbdr);border-radius:2px;padding:18px 22px;margin:22px 0}
+    .pcall-label{font-family:var(--mono);font-size:9.5px;color:var(--red2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+    .dtable{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:10.5px}
+    .dtable th{text-align:left;color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .dtable td{padding:8px 10px;color:var(--fg2);border-bottom:1px solid rgba(255,255,255,.03)}
+    .dtable tr:last-child td{border-bottom:none}
+    .rbadge{background:var(--rdim);color:var(--red2);border-radius:1px;padding:2px 8px;font-size:9.5px;border:1px solid var(--rbdr)}
+    .pcall-note{font-family:var(--mono);font-size:10.5px;color:var(--fg3);margin-top:10px;line-height:1.6}
+    .pcall-note b{color:var(--fg2)}
+    .plinkrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+    .plink{font-family:var(--mono);font-size:10.5px;color:var(--fg3);text-decoration:none;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:1px solid rgba(255,255,255,.07);border-radius:1px;transition:all .2s}
+    .plink:hover{border-color:var(--red);color:var(--red2)}
+    .plink.prim{background:var(--red);color:var(--fg);border-color:var(--red);font-weight:500}
+    .plink.prim:hover{background:var(--red2);transform:translateY(-1px)}
+    .plink svg{width:12px;height:12px;flex-shrink:0}
+    .pmeta{position:sticky;top:96px}
+    .pmbox{background:var(--sur);border:1px solid rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+    .pmh{padding:13px 17px;border-bottom:1px solid rgba(255,255,255,.05);font-family:var(--mono);font-size:9.5px;color:var(--fg3);letter-spacing:.14em;text-transform:uppercase}
+    .pmtags{padding:13px 17px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .ptag{font-family:var(--mono);font-size:10px;padding:4px 9px;background:rgba(255,255,255,.04);border-radius:1px;color:var(--fg2);transition:background .2s}
+    .ptag.hi{background:var(--rdim);color:var(--fg);border:1px solid var(--rbdr)}
+    .pcard:hover .ptag{background:rgba(184,50,40,.06)}
+    .pmrow{padding:11px 17px;border-bottom:1px solid rgba(255,255,255,.03)}
+    .pmrow:last-child{border-bottom:none}
+    .pml{font-family:var(--mono);font-size:9px;color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+    .pmv{font-size:12px;color:var(--fg);font-weight:500}
+
+    /* skills */
+    #skills{background:var(--bg2)}
+    .skills-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px}
+    .skb{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:2px;padding:26px 28px;transition:border-color .3s}
+    .skb:hover{border-color:rgba(184,50,40,.14)}
+    .skcat{font-family:var(--mono);font-size:9.5px;color:var(--red2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .skitems{display:flex;flex-wrap:wrap;gap:7px}
+    .ski{font-size:13px;color:var(--fg2);padding:5px 11px;background:rgba(255,255,255,.03);border-radius:1px;transition:color .2s,background .2s}
+    .skb:hover .ski{background:rgba(184,50,40,.06)}
+    .ski.hi{color:var(--fg);background:rgba(184,50,40,.08)}
+
+    /* contact */
+    #contact{min-height:66vh;display:flex;align-items:center}
+    .cwrap{max-width:860px}
+    .ch{font-family:var(--serif);font-style:italic;font-size:clamp(48px,7vw,92px);letter-spacing:-.03em;line-height:.93;margin-bottom:26px}
+    .ch .rc{color:var(--red2)}
+    .csub{font-size:15.5px;color:var(--fg2);line-height:1.78;max-width:500px;margin-bottom:40px;font-weight:300}
+    .clinks{display:flex;gap:10px;flex-wrap:wrap}
+    .clink{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10.5px;color:var(--fg2);text-decoration:none;padding:12px 20px;border:1px solid rgba(255,255,255,.07);border-radius:1px;transition:all .2s}
+    .clink:hover{color:var(--fg);border-color:rgba(184,50,40,.4);background:var(--rdim)}
+    .clink svg{width:14px;height:14px}
+
+    /* footer */
+    footer{border-top:1px solid rgba(255,255,255,.04);padding:22px 52px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+    .fc{font-family:var(--mono);font-size:10px;color:var(--fg3)}
+    .fs{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;color:var(--fg3)}
+    .fsd{width:6px;height:6px;background:#4caf7d;border-radius:50%;animation:bl 2.4s ease-in-out infinite}
+
+    /* animations */
+    @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+    .rv{opacity:0;transform:translateY(32px);transition:opacity .85s ease,transform .85s ease}
+    .rv.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.18s}.d3{transition-delay:.28s}.d4{transition-delay:.38s}
+
+    @media(max-width:900px){
+      nav{padding:14px 22px}.nlinks{display:none}
+      .wrap,#hero{padding-left:22px;padding-right:22px}
+      .pgrid,.pgrid.flip{grid-template-columns:1fr}
+      .pgrid.flip .pmeta{order:1}.pmeta{position:static}
+      footer{padding:18px 22px;flex-direction:column;gap:10px;text-align:center}
+    }
+  </style>
+</head>
+<body>
+<div id="c"></div><div id="cr"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nlogo">Pattabi <span>Rama.</span></div>
+  <ul class="nlinks">
+    <li><a href="#experience">Work</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-body">
+    <h1 class="hero-name">Pattabi<br/><span class="dim">Rama</span> <span class="red">M.</span></h1>
+    <div class="hero-tag">Backend Engineer &nbsp;·&nbsp; Open to Fullstack &nbsp;·&nbsp; Bangalore, IN</div>
+    <div class="hero-intro">
+      <p>
+        Hey — Bangalore-based backend engineer, currently building fintech infrastructure at Paywize.
+        Transaction engines, identity systems, account aggregators, DB sharding.
+        I like hard problems and understanding <em>why</em> things are built the way they are,
+        not just making them work.
+      </p>
+      <p>
+        Looking to make a move — mainly because I want to be somewhere that has good energy,
+        people I can learn from, and problems worth solving. Open to <strong>backend, fullstack,
+        or anything in between</strong>. Frontend isn't my strongest suit right now but
+        I pick things up fast and I'm not afraid of a React codebase.
+      </p>
+      <p>
+        If that sounds like a fit, <strong>let's talk.</strong>
+      </p>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-red">See my work</a>
+      <a href="mailto:pattabirama2000@gmail.com" class="btn btn-ghost">Get in touch</a>
+      <a href="https://linkedin.com/in/pattabi-rama-m-129431259" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+      <a href="https://github.com/pattabi884" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <div class="scroll-hint"><div class="sline"></div>Scroll</div>
+    <div class="avail"><div class="adot"></div>Open to opportunities</div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sh rv"><span class="sn">01</span><h2 class="st">Work Experience</h2><div class="sl"></div></div>
+    <div class="exp-stack">
+
+      <div class="exp-card rv d1">
+        <div class="exp-top">
+          <div>
+            <div class="exp-pill"><span class="exp-pill-dot"></span>Current · Paywize Technologies · Fintech</div>
+            <div class="exp-role">Associate Software Developer</div>
+            <div class="exp-co">Backend · NestJS · PostgreSQL · Redis · TypeScript</div>
+          </div>
+          <div class="exp-when">Oct 2025 — Present</div>
+        </div>
+        <div class="exp-body" style="padding-top:24px">
+          <div class="exp-prose">
+            <p>
+              Paywize is where I went from knowing backend to actually owning it. I've built across most of the core fintech stack here — the transaction processor that handles deposits, withdrawals, and transfers with idempotency guarantees so a double-tap never becomes a double-charge; a DB sharding layer that routes data across PostgreSQL instances and keeps identity data and transactional data in completely separate worlds by design.
+            </p>
+            <p>
+              On the identity side I built the KYC workflow — document verification, liveness hooks, async queue workers so verification happens in the background without stalling the user-facing API. And the account aggregator that connects to banking APIs, handles the consent flow, and normalises everything into a clean internal schema regardless of what format the bank decided to use.
+            </p>
+            <p>
+              The auth engine I'm probably most proud of — took 5 separate flows and collapsed them into one endpoint that routes 7 distinct auth states using Strategy + Factory patterns, with PASETO v3 tokens and Redis-backed lockout on high-risk endpoints. It's the kind of thing that's invisible when it works, which is the point.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card rv d2">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Python Developer Intern</div>
+            <div class="exp-co">Computer Vision Pipeline · Startup</div>
+          </div>
+          <div class="exp-when">Nov 2024 — May 2025</div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-ul">
+            <li>Built scalable REST APIs backing <b>OpenCV computer vision pipelines</b> with concurrent image batch processing distributed across worker nodes.</li>
+            <li>Profiled and optimised CPU-bound image operations and I/O-heavy DB interactions — improved <b>batch throughput</b> and reduced tail latency under concurrent load.</li>
+            <li>Diagnosed cross-layer failures across CV logic, storage, and orchestration — reduced recurring production incidents measurably.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sh rv"><span class="sn">02</span><h2 class="st">Featured Projects</h2><div class="sl"></div></div>
+    <div class="pstack">
+
+      <!-- PAM -->
+      <div class="pcard rv">
+        <div class="pgrid">
+          <div>
+            <div class="phook">Flagship · Live &amp; Deployed</div>
+            <h3 class="ptitle">Privileged Access Management System</h3>
+            <p class="psub">RBAC + ABAC · Async Audit Pipeline · Context-Aware Authorization · NestJS + Next.js</p>
+            <p class="ptext">Most RBAC tutorials give you a role column on a users table. <em>This isn't that.</em> Every protected request goes through a 3-layer decision engine — JWT identity, role-based permissions against a Redis-cached layer, then a context evaluator checking business hours, IP whitelist, MFA status, and session age. All before anything goes back to the caller.</p>
+            <p class="ptext">The cache layer is where it gets interesting. Role changes bust every affected user's cache in parallel via <code>Promise.all()</code> — no waiting for TTL. And the latest addition: <b>time-limited access grants with auto-expiry</b>. Approve someone's access for 2 minutes, a Redis-queued job fires at expiry and revokes it automatically. You can actually watch it happen in the demo — grant access, set the timer, and the permission disappears on its own. No manual revoke needed.</p>
+            <p class="ptext">Audit pipeline runs entirely async via BullMQ so there's zero latency impact, and a background worker continuously scans for suspicious patterns — repeated denials, off-hours access, unusual frequencies — without touching the request path.</p>
+            <p class="ptext" style="color:var(--fg3);font-size:13px;margin-top:8px">
+              <em style="font-family:var(--mono);font-style:normal;font-size:11px">🔨 Currently building:</em> a Go-based secrets sharing portal — paste a secret, get a one-time link, it self-destructs after opening or after N minutes. Wanted an excuse to write real Go and this felt like the right kind of small, sharp thing to build.
+            </p>
+            <div class="phls">
+              <div class="phl"><span class="phl-ic">⏱️</span><span><b>Time-limited access grants</b> — approve access with an expiry window, a Redis-queued job auto-revokes when it hits zero. There's a 2-minute demo mode you can trigger in the live app — grant access, watch the clock, watch it disappear.</span></div>
+              <div class="phl"><span class="phl-ic">📋</span><span><b>Async audit pipeline</b> — BullMQ handles all audit writes in the background. Request latency is completely unaffected regardless of audit volume.</span></div>
+              <div class="phl"><span class="phl-ic">🚨</span><span><b>Suspicious activity detection</b> running entirely in background workers — off-hours access, repeated denials, unusual permission frequencies — never touches the REST path.</span></div>
+              <div class="phl"><span class="phl-ic">🔄</span><span><b>Full access request lifecycle</b> — employees submit, managers approve behind an MFA gate, every state change is logged. Try approving as Manager then checking audit logs as Analyst.</span></div>
+            </div>
+            <div class="pcall">
+              <div class="pcall-label">🎮 Try the Live Demo — 4 roles, real permissions</div>
+              <table class="dtable">
+                <thead><tr><th>Role</th><th>Email</th><th>Password</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="rbadge">Super Admin</span></td><td>admin@sentry.dev</td><td>Admin@1234</td></tr>
+                  <tr><td><span class="rbadge">Manager</span></td><td>alice.manager@sentry.dev</td><td>Manager@1234</td></tr>
+                  <tr><td><span class="rbadge">Analyst</span></td><td>bob.analyst@sentry.dev</td><td>Analyst@1234</td></tr>
+                  <tr><td><span class="rbadge">Employee</span></td><td>carol.employee@sentry.dev</td><td>Employee@1234</td></tr>
+                </tbody>
+              </table>
+              <p class="pcall-note">Login as each role — the UI adapts live based on real permissions. <b>No reload.</b> Try the 2-minute access grant: approve as Manager, watch the permission auto-expire when the timer hits zero. Then check suspicious activity as Analyst.</p>
+            </div>
+            <div class="plinkrow">
+              <a href="https://privileged-access-management-rbac-a.vercel.app/login" target="_blank" class="plink prim">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Live Demo
+              </a>
+              <a href="https://privileged-access-management-rbac-abac-production.up.railway.app/api" target="_blank" class="plink">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Live API
+              </a>
+              <a href="https://github.com/pattabi884/Privileged-Access-Management-RBAC-ABAC" target="_blank" class="plink">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Source Code
+              </a>
+            </div>
+          </div>
+          <div class="pmeta">
+            <div class="pmbox">
+              <div class="pmh">Stack</div>
+              <div class="pmtags">
+                <span class="ptag hi">NestJS</span><span class="ptag hi">TypeScript</span>
+                <span class="ptag">MongoDB Atlas</span><span class="ptag">Redis</span>
+                <span class="ptag">BullMQ</span><span class="ptag">JWT + Passport</span>
+                <span class="ptag">Next.js 16</span><span class="ptag">Railway</span>
+                <span class="ptag">Vercel</span><span class="ptag">Upstash Redis</span>
+              </div>
+              <div class="pmrow"><div class="pml">Auth Model</div><div class="pmv">RBAC + ABAC hybrid</div></div>
+              <div class="pmrow"><div class="pml">Cache TTL</div><div class="pmv">5 min · instant invalidation</div></div>
+              <div class="pmrow"><div class="pml">Access Grants</div><div class="pmv">Time-limited · Redis auto-expiry</div></div>
+              <div class="pmrow"><div class="pml">Audit Latency Impact</div><div class="pmv">Zero — fully async</div></div>
+              <div class="pmrow"><div class="pml">Status</div><div class="pmv">Live on Railway + Vercel</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GEOSPATIAL -->
+      <div class="pcard rv">
+        <div class="pgrid flip">
+          <div class="pmeta">
+            <div class="pmbox">
+              <div class="pmh">Stack</div>
+              <div class="pmtags">
+                <span class="ptag hi">Kafka</span><span class="ptag hi">Redis GEO</span>
+                <span class="ptag">PostGIS</span><span class="ptag">PostgreSQL</span>
+                <span class="ptag">Socket.io</span><span class="ptag">React + Leaflet</span>
+                <span class="ptag">Docker Compose</span><span class="ptag">Node.js</span>
+              </div>
+              <div class="pmrow"><div class="pml">Target Throughput</div><div class="pmv">100k+ events/sec</div></div>
+              <div class="pmrow"><div class="pml">Ghost Driver Fix</div><div class="pmv">Redis TTL auto-eviction (10s)</div></div>
+              <div class="pmrow"><div class="pml">DB Write Reduction</div><div class="pmv">~99% via batched PostGIS</div></div>
+              <div class="pmrow"><div class="pml">Proximity Query</div><div class="pmv">Sub-second via Redis GEO</div></div>
+              <div class="pmrow"><div class="pml">Lag Strategy</div><div class="pmv">Backpressure + stale frame drop</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="phook">Systems Design · High-Throughput Streaming</div>
+            <h3 class="ptitle">Realtime Geospatial Engine</h3>
+            <p class="psub">Uber Backend Clone · Kafka · Redis GEO · PostGIS · WebSockets</p>
+            <p class="ptext">The hard part of building something like Uber's backend isn't tracking location — it's <b>tracking it at volume without the database becoming the bottleneck</b>. This engine is designed around exactly that problem.</p>
+            <div class="phls">
+              <div class="phl"><span class="phl-ic">⚙️</span><span><b>Geo-spatial Kafka sharding</b> — <code>driverId</code> as partition key means all updates for a driver always land in the same partition. Location A → B ordering is deterministic, always.</span></div>
+              <div class="phl"><span class="phl-ic">👻</span><span><b>The Ghost Driver fix</b> — pairing <code>GEOADD</code> with <code>SET EX</code> (10s TTL). Drivers that stop heartbeating auto-evict from the proximity index. Kill the simulator: drivers vanish after 15s.</span></div>
+              <div class="phl"><span class="phl-ic">🔁</span><span><b>Backpressure-aware consumers</b> — lag = current time − event timestamp. If lag exceeds 2s, stale frames drop. The system always prioritises <em>live</em> data over catching up.</span></div>
+              <div class="phl"><span class="phl-ic">💾</span><span><b>~99% fewer DB writes</b> — updates buffer in memory and flush to PostGIS in batches of 100 (or every 5s). Same durability. A fraction of the IOPS.</span></div>
+            </div>
+            <div class="plinkrow">
+              <a href="https://github.com/pattabi884/Realtime-geospatial-engine" target="_blank" class="plink prim">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                View Source
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WALLET -->
+      <div class="pcard rv">
+        <div class="pgrid">
+          <div>
+            <div class="phook">Fintech · Distributed Database Architecture</div>
+            <h3 class="ptitle">Sharded Wallet System</h3>
+            <p class="psub">DB Sharding · Event-Driven Transactions · Idempotency · Ledger Consistency</p>
+            <p class="ptext">A high-performance fintech backend built to answer: <em>what does it actually take to build a wallet that can't double-charge users, won't fall over under load, and scales horizontally?</em></p>
+            <div class="phls">
+              <div class="phl"><span class="phl-ic">🔀</span><span><b>Horizontal DB sharding</b> — data split across multiple PostgreSQL instances via Merchant ID modulo routing. Custom Prisma clients enforce a strict boundary between <b>identity data</b> (central DB) and <b>transactional data</b> (shard DBs). Cross-tenant bleed is impossible by design.</span></div>
+              <div class="phl"><span class="phl-ic">⚡</span><span><b>Event-driven ingestion</b> — API accepts requests, pushes to <b>BullMQ</b>, returns <code>202 Accepted</code> immediately. Workers handle shard routing, ledger sync, and webhooks. Zero blocking on the hot path.</span></div>
+              <div class="phl"><span class="phl-ic">🔒</span><span><b>Idempotency via IRN</b> — every transaction carries a unique Internal Reference Number. Duplicates detected and deduplicated before touching the DB. No double-spending under any concurrency.</span></div>
+              <div class="phl"><span class="phl-ic">🪝</span><span><b>Merchant webhook pipeline</b> — secondary BullMQ queue fires external notifications after ledger sync, keeping integrations fully decoupled from core transaction flow.</span></div>
+            </div>
+            <div class="plinkrow">
+              <a href="https://github.com/pattabi884/Fintech-Backend-Scalable-Wallet-system-" target="_blank" class="plink prim">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                View Source
+              </a>
+            </div>
+          </div>
+          <div class="pmeta">
+            <div class="pmbox">
+              <div class="pmh">Stack</div>
+              <div class="pmtags">
+                <span class="ptag hi">PostgreSQL</span><span class="ptag hi">BullMQ</span>
+                <span class="ptag">Node.js</span><span class="ptag">TypeScript</span>
+                <span class="ptag">Prisma</span><span class="ptag">Redis</span>
+                <span class="ptag">Docker Compose</span><span class="ptag">Express</span>
+              </div>
+              <div class="pmrow"><div class="pml">Sharding Strategy</div><div class="pmv">Merchant ID modulo routing</div></div>
+              <div class="pmrow"><div class="pml">DB Architecture</div><div class="pmv">1 central + 2 shard instances</div></div>
+              <div class="pmrow"><div class="pml">Ingestion Pattern</div><div class="pmv">202 Accepted → async worker</div></div>
+              <div class="pmrow"><div class="pml">Idempotency</div><div class="pmv">IRN deduplication</div></div>
+              <div class="pmrow"><div class="pml">Infra</div><div class="pmv">Fully Dockerized</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sh rv"><span class="sn">03</span><h2 class="st">Technical Skills</h2><div class="sl"></div></div>
+    <div class="skills-g">
+      <div class="skb rv d1"><div class="skcat">Languages</div><div class="skitems"><span class="ski hi">TypeScript</span><span class="ski hi">Python</span><span class="ski">Go</span><span class="ski">Java</span></div></div>
+      <div class="skb rv d2"><div class="skcat">Backend & Frameworks</div><div class="skitems"><span class="ski hi">NestJS</span><span class="ski hi">Node.js</span><span class="ski">Fastify</span><span class="ski">Express.js</span></div></div>
+      <div class="skb rv d3"><div class="skcat">Databases & Caching</div><div class="skitems"><span class="ski hi">PostgreSQL</span><span class="ski hi">MongoDB</span><span class="ski hi">Redis</span><span class="ski">PostGIS</span><span class="ski">Prisma</span><span class="ski">Mongoose</span></div></div>
+      <div class="skb rv d4"><div class="skcat">Messaging & Async</div><div class="skitems"><span class="ski hi">Kafka</span><span class="ski hi">BullMQ</span><span class="ski">Event-Driven Arch</span></div></div>
+      <div class="skb rv d1"><div class="skcat">Concepts</div><div class="skitems"><span class="ski hi">Distributed Systems</span><span class="ski hi">DB Sharding</span><span class="ski hi">RBAC / ABAC</span><span class="ski">Idempotent APIs</span><span class="ski">Microservices</span><span class="ski">REST API Design</span><span class="ski">CI/CD</span></div></div>
+      <div class="skb rv d2"><div class="skcat">Infra & Tools</div><div class="skitems"><span class="ski hi">Docker</span><span class="ski">Railway</span><span class="ski">Vercel</span><span class="ski">MongoDB Atlas</span><span class="ski">Upstash Redis</span><span class="ski">Git</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="cwrap rv">
+      <div class="sh" style="margin-bottom:32px"><span class="sn">04</span><div class="sl"></div></div>
+      <h2 class="ch">Let's build<br/>something <span class="rc">real.</span></h2>
+      <p class="csub">Backend engineering roles, distributed systems problems, or just a good conversation about system design — I'm up for all of it. Based in Bangalore, open to remote.</p>
+      <div class="clinks">
+        <a href="mailto:pattabirama2000@gmail.com" class="clink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          pattabirama2000@gmail.com
+        </a>
+        <a href="tel:+918660640349" class="clink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.26h3a2 2 0 0 1 2 1.72c.12.6.26 1.19.4 1.77l.3 1.04a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.12 6.12l.96-1.88a2 2 0 0 1 2.11-.45c.58.15 1.17.29 1.77.4A2 2 0 0 1 22 16.92z"/></svg>
+          +91 86606 40349
+        </a>
+        <a href="https://linkedin.com/in/pattabi-rama-m-129431259" target="_blank" class="clink">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/pattabi884" target="_blank" class="clink">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="fc">© 2026 Pattabi Rama M.</span>
+  <div class="fs"><div class="fsd"></div>Open to opportunities</div>
+</footer>
+
+<script>
+  // cursor
+  const C=document.getElementById('c'),CR=document.getElementById('cr');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function loop(){
+    C.style.cssText=`left:${mx}px;top:${my}px`;
+    rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
+    CR.style.cssText=`left:${rx}px;top:${ry}px`;
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,button,.pcard,.exp-card,.skb').forEach(el=>{
+    el.addEventListener('mouseenter',()=>CR.classList.add('on'));
+    el.addEventListener('mouseleave',()=>CR.classList.remove('on'));
+  });
+  // mouse glow
+  document.querySelectorAll('.pcard').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      card.style.setProperty('--my',(e.clientY-r.top)+'px');
+    });
+  });
+  // scroll reveal
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.07});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  // active nav
+  document.querySelectorAll('section[id]').forEach(sec=>{
+    new IntersectionObserver(entries=>{
+      if(entries[0].isIntersecting){
+        document.querySelectorAll('.nlinks a').forEach(a=>a.classList.remove('on'));
+        const a=document.querySelector(`.nlinks a[href="#${sec.id}"]`);
+        if(a)a.classList.add('on');
+      }
+    },{threshold:.35}).observe(sec);
+  });
+  // smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+    });
+  });
+</script>
+</body>
+</html>
