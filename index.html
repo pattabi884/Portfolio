@@ -21,17 +21,14 @@
     html{scroll-behavior:smooth}
     body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;cursor:none}
 
-    /* cursor */
     #c{position:fixed;pointer-events:none;z-index:9999;width:7px;height:7px;background:var(--red2);border-radius:50%;transform:translate(-50%,-50%)}
     #cr{position:fixed;pointer-events:none;z-index:9998;width:26px;height:26px;border:1px solid rgba(208,64,53,.45);border-radius:50%;transform:translate(-50%,-50%);transition:width .22s,height .22s,border-color .22s}
     #cr.on{width:40px;height:40px;border-color:var(--red2)}
 
-    /* grain */
     body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
       opacity:.03}
 
-    /* nav */
     nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 52px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(18px) saturate(160%);background:rgba(8,8,6,.82);border-bottom:1px solid rgba(255,255,255,.035)}
     .nlogo{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--fg);letter-spacing:.01em}
     .nlogo span{color:var(--red2)}
@@ -40,7 +37,6 @@
     .nlinks a:hover,.nlinks a.on{color:var(--fg)}
     section{position:relative;z-index:1}
 
-    /* hero */
     #hero{min-height:100vh;max-width:1280px;margin:0 auto;padding:0 52px;display:grid;grid-template-rows:1fr auto}
     .hero-body{display:flex;flex-direction:column;justify-content:center;padding-top:96px}
     .hero-name{font-family:var(--serif);font-style:italic;font-size:clamp(68px,10vw,144px);line-height:.88;letter-spacing:-.04em;opacity:0;animation:up .8s ease .1s forwards}
@@ -67,14 +63,12 @@
     .adot{width:6px;height:6px;background:#4caf7d;border-radius:50%;animation:bl 2.4s ease-in-out infinite}
     @keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
 
-    /* section shared */
     .wrap{max-width:1280px;margin:0 auto;padding:104px 52px}
     .sh{display:flex;align-items:baseline;gap:16px;margin-bottom:64px}
     .sn{font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:.14em;text-transform:uppercase}
     .st{font-family:var(--serif);font-style:italic;font-size:clamp(38px,4.5vw,56px);letter-spacing:-.025em;line-height:1}
     .sl{flex:1;height:1px;background:rgba(255,255,255,.04);margin-left:6px;align-self:center}
 
-    /* experience */
     #experience{background:var(--bg2)}
     .exp-stack{display:flex;flex-direction:column;gap:2px}
     .exp-card{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:2px;overflow:hidden;transition:border-color .3s}
@@ -91,13 +85,15 @@
     .exp-body{padding:18px 38px 32px}
     .exp-ul{list-style:none;display:flex;flex-direction:column;gap:13px}
     .exp-ul li{font-size:13.5px;color:var(--fg2);line-height:1.78;padding-left:22px;position:relative}
+    .exp-ul li::before{content:'—';position:absolute;left:0;color:var(--red);font-size:11px;top:3px}
+    .exp-ul li b{color:var(--fg);font-weight:500}
+    .exp-ul li em{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--fg)}
     .exp-prose p{font-size:14px;color:var(--fg2);line-height:1.82;font-weight:300}
     .exp-prose p+p{margin-top:14px}
     .exp-prose b{color:var(--fg);font-weight:500}
-    .exp-ul li b{color:var(--fg);font-weight:500}
-    .exp-ul li em{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--fg)}
+    .exp-divider{margin:18px 0;height:1px;background:rgba(255,255,255,.04)}
+    .exp-group-label{font-family:var(--mono);font-size:9.5px;color:var(--red2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
 
-    /* projects */
     .pstack{display:flex;flex-direction:column;gap:2px}
     .pcard{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:2px;padding:52px;transition:border-color .3s;cursor:none;position:relative;overflow:hidden}
     .pcard::after{content:'';position:absolute;inset:0;background:radial-gradient(700px at var(--mx,50%) var(--my,50%),rgba(184,50,40,.042),transparent 65%);opacity:0;transition:opacity .5s;pointer-events:none}
@@ -144,7 +140,6 @@
     .pml{font-family:var(--mono);font-size:9px;color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
     .pmv{font-size:12px;color:var(--fg);font-weight:500}
 
-    /* skills */
     #skills{background:var(--bg2)}
     .skills-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px}
     .skb{background:var(--bg3);border:1px solid rgba(255,255,255,.04);border-radius:2px;padding:26px 28px;transition:border-color .3s}
@@ -155,7 +150,6 @@
     .skb:hover .ski{background:rgba(184,50,40,.06)}
     .ski.hi{color:var(--fg);background:rgba(184,50,40,.08)}
 
-    /* contact */
     #contact{min-height:66vh;display:flex;align-items:center}
     .cwrap{max-width:860px}
     .ch{font-family:var(--serif);font-style:italic;font-size:clamp(48px,7vw,92px);letter-spacing:-.03em;line-height:.93;margin-bottom:26px}
@@ -166,13 +160,11 @@
     .clink:hover{color:var(--fg);border-color:rgba(184,50,40,.4);background:var(--rdim)}
     .clink svg{width:14px;height:14px}
 
-    /* footer */
     footer{border-top:1px solid rgba(255,255,255,.04);padding:22px 52px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
     .fc{font-family:var(--mono);font-size:10px;color:var(--fg3)}
     .fs{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;color:var(--fg3)}
     .fsd{width:6px;height:6px;background:#4caf7d;border-radius:50%;animation:bl 2.4s ease-in-out infinite}
 
-    /* animations */
     @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
     .rv{opacity:0;transform:translateY(32px);transition:opacity .85s ease,transform .85s ease}
     .rv.in{opacity:1;transform:none}
@@ -190,7 +182,6 @@
 <body>
 <div id="c"></div><div id="cr"></div>
 
-<!-- NAV -->
 <nav>
   <div class="nlogo">Pattabi <span>Rama.</span></div>
   <ul class="nlinks">
@@ -201,15 +192,14 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-body">
     <h1 class="hero-name">Pattabi<br/><span class="dim">Rama</span> <span class="red">M.</span></h1>
-    <div class="hero-tag">Backend Engineer &nbsp;·&nbsp; Open to Fullstack &nbsp;·&nbsp; Bangalore, IN</div>
+    <div class="hero-tag">Backend Engineer &nbsp;·&nbsp; Go &amp; Node.js &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Bangalore, IN</div>
     <div class="hero-intro">
       <p>
-        Hey — Bangalore-based backend engineer, currently building fintech infrastructure at Paywize.
-        Transaction engines, identity systems, account aggregators, DB sharding.
+        Bangalore-based backend engineer, currently building fintech infrastructure at Paywize in <strong>Go and Node.js</strong>.
+        Kafka pipelines, payment gateways, BBPS integrations, DB sharding, RBAC systems.
         I like hard problems and understanding <em>why</em> things are built the way they are,
         not just making them work.
       </p>
@@ -247,22 +237,42 @@
           <div>
             <div class="exp-pill"><span class="exp-pill-dot"></span>Current · Paywize Technologies · Fintech</div>
             <div class="exp-role">Associate Software Developer</div>
-            <div class="exp-co">Backend · NestJS · PostgreSQL · Redis · TypeScript</div>
+            <div class="exp-co">Go · NestJS · PostgreSQL · Kafka · RabbitMQ · Temporal · Keycloak · Kong</div>
           </div>
           <div class="exp-when">Oct 2025 — Present</div>
         </div>
+        <div class="exp-mods">
+          <span class="mtag hi">Go 1.24</span>
+          <span class="mtag hi">Kafka</span>
+          <span class="mtag hi">Temporal</span>
+          <span class="mtag hi">Keycloak</span>
+          <span class="mtag">RabbitMQ</span>
+          <span class="mtag">PostgreSQL</span>
+          <span class="mtag">SQLC</span>
+          <span class="mtag">Kong</span>
+          <span class="mtag">Redis</span>
+          <span class="mtag">AWS S3</span>
+          <span class="mtag">NestJS</span>
+          <span class="mtag">PASETO v3</span>
+        </div>
         <div class="exp-body" style="padding-top:24px">
-          <div class="exp-prose">
-            <p>
-              Paywize is where I went from knowing backend to actually owning it. I've built across most of the core fintech stack here — the transaction processor that handles deposits, withdrawals, and transfers with idempotency guarantees so a double-tap never becomes a double-charge; a DB sharding layer that routes data across PostgreSQL instances and keeps identity data and transactional data in completely separate worlds by design.
-            </p>
-            <p>
-              On the identity side I built the KYC workflow — document verification, liveness hooks, async queue workers so verification happens in the background without stalling the user-facing API. And the account aggregator that connects to banking APIs, handles the consent flow, and normalises everything into a clean internal schema regardless of what format the bank decided to use.
-            </p>
-            <p>
-              The auth engine I'm probably most proud of — took 5 separate flows and collapsed them into one endpoint that routes 7 distinct auth states using Strategy + Factory patterns, with PASETO v3 tokens and Redis-backed lockout on high-risk endpoints. It's the kind of thing that's invisible when it works, which is the point.
-            </p>
-          </div>
+
+          <div class="exp-group-label">Go services — microservices platform</div>
+          <ul class="exp-ul">
+            <li><b>BBPS microservice (Go) — PhonePe aggregator integration:</b> Bharat Bill Payment System service over PhonePe's BBPS APIs — biller discovery with Redis-cached category metadata, idempotent bill-fetch keyed on <code style="font-size:11px;color:var(--fg3)">SHA256(customer_id + biller_id)</code>, payment initiation with reference-ID deduplication at the DB layer. PhonePe confirmation webhooks consumed via Kafka; failures written to a typed DLQ (<code style="font-size:11px;color:var(--fg3)">TIMEOUT / INVALID_BILLER / PAYMENT_FAILED</code>) for structured replay. Dedicated BBPS schema isolated from the transactional shard.</li>
+            <li><b>Activity Log microservice (Go) — zero-event-loss Kafka pipeline:</b> Ingests events from every upstream service and normalises them into a unified schema, handling legacy field mappings, multi-service schemas, and geo metadata in one normalization pass. SHA-256 fingerprints malformed messages to a DLQ. Paginated REST API with ILIKE-safe full-text search and UTC-aware date/time filters (OpenAPI/Swagger).</li>
+            <li><b>Merchant Management &amp; Keycloak provisioning (Go):</b> Each merchant gets scoped prod/UAT realm roles atomically via a Keycloak client — failures trigger a deferred cleanup pass so no half-created IAM state leaks. Temporal exponential-backoff orchestration for webhook delivery (10s → 2× coefficient → 1min cap). Column-level AES encryption on Aadhaar/PAN/bank fields for compliance. RBAC system: 42 permissions across 7 modules, 5 system roles, PII reveal audit trail.</li>
+            <li><b>TSP routing layer (Go):</b> Payment collect requests dispatched to pluggable provider implementations (UPI, BBPS) via a Strategy pattern. RabbitMQ publishes payment events downstream to a consumer service that finalises status and fires webhooks. SQLC for type-safe PostgreSQL queries; PgBouncer for connection pooling across 28 versioned Goose migrations.</li>
+          </ul>
+
+          <div class="exp-divider"></div>
+          <div class="exp-group-label">NestJS / TypeScript — auth &amp; transaction engine</div>
+          <ul class="exp-ul">
+            <li><b>Auth engine:</b> Took 5 separate flows and collapsed them into one endpoint routing 7 distinct auth states via Strategy + Factory — PASETO v3 tokens, Redis-backed MPIN lockout on high-risk endpoints, Kong validating upstream so services consume pre-validated JWTs without a Keycloak roundtrip per request.</li>
+            <li><b>Transaction processor:</b> Idempotent REST APIs with atomic PostgreSQL writes across a consistent-hashing multi-tenant shard layer — identity data and transactional data in completely separate schema worlds by design. A double-tap never becomes a double-charge.</li>
+            <li><b>KYC workflow:</b> Document verification, liveness hooks, async BullMQ queue workers so verification happens in the background without stalling the user-facing API. Account aggregator normalises banking API responses into a clean internal schema regardless of upstream format.</li>
+          </ul>
+
         </div>
       </div>
 
@@ -270,7 +280,7 @@
         <div class="exp-top">
           <div>
             <div class="exp-role">Python Developer Intern</div>
-            <div class="exp-co">Computer Vision Pipeline · Startup</div>
+            <div class="exp-co">Computer Vision Pipeline · Flickit</div>
           </div>
           <div class="exp-when">Nov 2024 — May 2025</div>
         </div>
@@ -293,6 +303,48 @@
     <div class="sh rv"><span class="sn">02</span><h2 class="st">Featured Projects</h2><div class="sl"></div></div>
     <div class="pstack">
 
+      <!-- GOPAY -->
+      <div class="pcard rv">
+        <div class="pgrid flip">
+          <div class="pmeta">
+            <div class="pmbox">
+              <div class="pmh">Stack</div>
+              <div class="pmtags">
+                <span class="ptag hi">Go 1.23</span><span class="ptag hi">Kafka</span>
+                <span class="ptag hi">Temporal</span><span class="ptag hi">Redis</span>
+                <span class="ptag">RabbitMQ</span><span class="ptag">PostgreSQL</span>
+                <span class="ptag">Keycloak</span><span class="ptag">sony/gobreaker</span>
+                <span class="ptag">Docker Compose</span>
+              </div>
+              <div class="pmrow"><div class="pml">Services</div><div class="pmv">7 microservices + API Gateway</div></div>
+              <div class="pmrow"><div class="pml">Idempotency</div><div class="pmv">SHA256 server-side dedup</div></div>
+              <div class="pmrow"><div class="pml">Outbox relay</div><div class="pmv">O(log n) Redis cursor protocol</div></div>
+              <div class="pmrow"><div class="pml">Capability reads</div><div class="pmv">1 HGETALL replaces 4 joins</div></div>
+              <div class="pmrow"><div class="pml">Status</div><div class="pmv">Open source · GitHub</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="phook">Go · High-Throughput Fintech Platform</div>
+            <h3 class="ptitle">GoPay</h3>
+            <p class="psub">7-Service Microservices Platform · API Gateway · Temporal Workflows · Kafka · Redis · Keycloak</p>
+            <p class="ptext">A high-throughput fintech platform built entirely in Go, designed around the patterns I keep running into at Paywize and wanted to own end-to-end. <em>Seven services behind an API Gateway</em> with Keycloak RBAC, Redis sliding-window rate limiting, and per-upstream circuit breakers.</p>
+            <div class="phls">
+              <div class="phl"><span class="phl-ic">⚙️</span><span><b>Temporal OrderFulfillmentWorkflow</b> — orchestrates ReserveStock → ProcessPayment → ScheduleDelivery. Each step is an activity with its own retry policy. Failures at any stage don't corrupt state.</span></div>
+              <div class="phl"><span class="phl-ic">🔒</span><span><b>Server-side idempotency</b> via <code style="font-size:11px">SHA256(user_id + endpoint + canonical_body_hash)</code> — catches duplicate requests without requiring client-sent keys. Nothing leaks through under concurrent retries.</span></div>
+              <div class="phl"><span class="phl-ic">📬</span><span><b>Transactional Outbox with Redis cursor protocol</b> — <code style="font-size:11px">WHERE id &gt; $cursor</code> on the primary-key index gives O(log n) relay at any table size. Crash-safe resume without re-scanning delivered rows. Strict insertion-order Kafka delivery guaranteed.</span></div>
+              <div class="phl"><span class="phl-ic">📋</span><span><b>Event Contract Registry</b> on a compacted Kafka topic — validates every inbound payload at the Audit Service. A service failing contract registration fails its readiness probe before receiving traffic. <code style="font-size:11px">CONTRACT_VIOLATION</code> DLQ reason separates schema drift from corruption.</span></div>
+              <div class="phl"><span class="phl-ic">⚡</span><span><b>Payment Capability Projection</b> materialised into Redis (<code style="font-size:11px">HSET capability:{user_id}</code>) — one HGETALL replaces four joins on the hot payment path. Daily spend tracked atomically with HINCRBYFLOAT inside the payment write pipeline.</span></div>
+            </div>
+            <div class="plinkrow">
+              <a href="https://github.com/pattabi884/GOPay" target="_blank" class="plink prim">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                View Source
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- PAM -->
       <div class="pcard rv">
         <div class="pgrid">
@@ -301,16 +353,13 @@
             <h3 class="ptitle">Privileged Access Management System</h3>
             <p class="psub">RBAC + ABAC · Async Audit Pipeline · Context-Aware Authorization · NestJS + Next.js</p>
             <p class="ptext">Most RBAC tutorials give you a role column on a users table. <em>This isn't that.</em> Every protected request goes through a 3-layer decision engine — JWT identity, role-based permissions against a Redis-cached layer, then a context evaluator checking business hours, IP whitelist, MFA status, and session age. All before anything goes back to the caller.</p>
-            <p class="ptext">The cache layer is where it gets interesting. Role changes bust every affected user's cache in parallel via <code>Promise.all()</code> — no waiting for TTL. And the latest addition: <b>time-limited access grants with auto-expiry</b>. Approve someone's access for 2 minutes, a Redis-queued job fires at expiry and revokes it automatically. You can actually watch it happen in the demo — grant access, set the timer, and the permission disappears on its own. No manual revoke needed.</p>
+            <p class="ptext">The cache layer is where it gets interesting. Role changes bust every affected user's cache in parallel via <code>Promise.all()</code> — no waiting for TTL. And the latest addition: <b>time-limited access grants with auto-expiry</b>. Approve someone's access for 2 minutes, a Redis-queued job fires at expiry and revokes it automatically.</p>
             <p class="ptext">Audit pipeline runs entirely async via BullMQ so there's zero latency impact, and a background worker continuously scans for suspicious patterns — repeated denials, off-hours access, unusual frequencies — without touching the request path.</p>
-            <p class="ptext" style="color:var(--fg3);font-size:13px;margin-top:8px">
-              <em style="font-family:var(--mono);font-style:normal;font-size:11px">🔨 Currently building:</em> a Go-based secrets sharing portal — paste a secret, get a one-time link, it self-destructs after opening or after N minutes. Wanted an excuse to write real Go and this felt like the right kind of small, sharp thing to build.
-            </p>
             <div class="phls">
-              <div class="phl"><span class="phl-ic">⏱️</span><span><b>Time-limited access grants</b> — approve access with an expiry window, a Redis-queued job auto-revokes when it hits zero. There's a 2-minute demo mode you can trigger in the live app — grant access, watch the clock, watch it disappear.</span></div>
+              <div class="phl"><span class="phl-ic">⏱️</span><span><b>Time-limited access grants</b> — approve access with an expiry window, a Redis-queued job auto-revokes when it hits zero. There's a 2-minute demo mode in the live app.</span></div>
               <div class="phl"><span class="phl-ic">📋</span><span><b>Async audit pipeline</b> — BullMQ handles all audit writes in the background. Request latency is completely unaffected regardless of audit volume.</span></div>
-              <div class="phl"><span class="phl-ic">🚨</span><span><b>Suspicious activity detection</b> running entirely in background workers — off-hours access, repeated denials, unusual permission frequencies — never touches the REST path.</span></div>
-              <div class="phl"><span class="phl-ic">🔄</span><span><b>Full access request lifecycle</b> — employees submit, managers approve behind an MFA gate, every state change is logged. Try approving as Manager then checking audit logs as Analyst.</span></div>
+              <div class="phl"><span class="phl-ic">🚨</span><span><b>Suspicious activity detection</b> running entirely in background workers — off-hours access, repeated denials, unusual permission frequencies.</span></div>
+              <div class="phl"><span class="phl-ic">🔄</span><span><b>Full access request lifecycle</b> — employees submit, managers approve behind an MFA gate, every state change is logged.</span></div>
             </div>
             <div class="pcall">
               <div class="pcall-label">🎮 Try the Live Demo — 4 roles, real permissions</div>
@@ -323,16 +372,15 @@
                   <tr><td><span class="rbadge">Employee</span></td><td>carol.employee@sentry.dev</td><td>Employee@1234</td></tr>
                 </tbody>
               </table>
-              <p class="pcall-note">Login as each role — the UI adapts live based on real permissions. <b>No reload.</b> Try the 2-minute access grant: approve as Manager, watch the permission auto-expire when the timer hits zero. Then check suspicious activity as Analyst.</p>
+              <p class="pcall-note">Login as each role — the UI adapts live based on real permissions. <b>No reload.</b> Try the 2-minute access grant: approve as Manager, watch the permission auto-expire when the timer hits zero.</p>
             </div>
             <div class="plinkrow">
               <a href="https://privileged-access-management-rbac-a-delta.vercel.app/login" target="_blank" class="plink prim">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 Live Demo
               </a>
-    
               <a href="https://github.com/pattabi884/Privileged-Access-Management-RBAC-ABAC" target="_blank" class="plink">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.805 5.925-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
                 Source Code
               </a>
             </div>
@@ -383,7 +431,7 @@
             <p class="ptext">The hard part of building something like Uber's backend isn't tracking location — it's <b>tracking it at volume without the database becoming the bottleneck</b>. This engine is designed around exactly that problem.</p>
             <div class="phls">
               <div class="phl"><span class="phl-ic">⚙️</span><span><b>Geo-spatial Kafka sharding</b> — <code>driverId</code> as partition key means all updates for a driver always land in the same partition. Location A → B ordering is deterministic, always.</span></div>
-              <div class="phl"><span class="phl-ic">👻</span><span><b>The Ghost Driver fix</b> — pairing <code>GEOADD</code> with <code>SET EX</code> (10s TTL). Drivers that stop heartbeating auto-evict from the proximity index. Kill the simulator: drivers vanish after 15s.</span></div>
+              <div class="phl"><span class="phl-ic">👻</span><span><b>The Ghost Driver fix</b> — pairing GEOADD with SET EX (10s TTL). Drivers that stop heartbeating auto-evict from the proximity index. Kill the simulator: drivers vanish after 15s.</span></div>
               <div class="phl"><span class="phl-ic">🔁</span><span><b>Backpressure-aware consumers</b> — lag = current time − event timestamp. If lag exceeds 2s, stale frames drop. The system always prioritises <em>live</em> data over catching up.</span></div>
               <div class="phl"><span class="phl-ic">💾</span><span><b>~99% fewer DB writes</b> — updates buffer in memory and flush to PostGIS in batches of 100 (or every 5s). Same durability. A fraction of the IOPS.</span></div>
             </div>
@@ -407,7 +455,7 @@
             <p class="ptext">A high-performance fintech backend built to answer: <em>what does it actually take to build a wallet that can't double-charge users, won't fall over under load, and scales horizontally?</em></p>
             <div class="phls">
               <div class="phl"><span class="phl-ic">🔀</span><span><b>Horizontal DB sharding</b> — data split across multiple PostgreSQL instances via Merchant ID modulo routing. Custom Prisma clients enforce a strict boundary between <b>identity data</b> (central DB) and <b>transactional data</b> (shard DBs). Cross-tenant bleed is impossible by design.</span></div>
-              <div class="phl"><span class="phl-ic">⚡</span><span><b>Event-driven ingestion</b> — API accepts requests, pushes to <b>BullMQ</b>, returns <code>202 Accepted</code> immediately. Workers handle shard routing, ledger sync, and webhooks. Zero blocking on the hot path.</span></div>
+              <div class="phl"><span class="phl-ic">⚡</span><span><b>Event-driven ingestion</b> — API accepts requests, pushes to BullMQ, returns 202 Accepted immediately. Workers handle shard routing, ledger sync, and webhooks. Zero blocking on the hot path.</span></div>
               <div class="phl"><span class="phl-ic">🔒</span><span><b>Idempotency via IRN</b> — every transaction carries a unique Internal Reference Number. Duplicates detected and deduplicated before touching the DB. No double-spending under any concurrency.</span></div>
               <div class="phl"><span class="phl-ic">🪝</span><span><b>Merchant webhook pipeline</b> — secondary BullMQ queue fires external notifications after ledger sync, keeping integrations fully decoupled from core transaction flow.</span></div>
             </div>
@@ -446,12 +494,75 @@
   <div class="wrap">
     <div class="sh rv"><span class="sn">03</span><h2 class="st">Technical Skills</h2><div class="sl"></div></div>
     <div class="skills-g">
-      <div class="skb rv d1"><div class="skcat">Languages</div><div class="skitems"><span class="ski hi">TypeScript</span><span class="ski hi">Python</span><span class="ski">Go</span><span class="ski">Java</span></div></div>
-      <div class="skb rv d2"><div class="skcat">Backend & Frameworks</div><div class="skitems"><span class="ski hi">NestJS</span><span class="ski hi">Node.js</span><span class="ski">Fastify</span><span class="ski">Express.js</span></div></div>
-      <div class="skb rv d3"><div class="skcat">Databases & Caching</div><div class="skitems"><span class="ski hi">PostgreSQL</span><span class="ski hi">MongoDB</span><span class="ski hi">Redis</span><span class="ski">PostGIS</span><span class="ski">Prisma</span><span class="ski">Mongoose</span></div></div>
-      <div class="skb rv d4"><div class="skcat">Messaging & Async</div><div class="skitems"><span class="ski hi">Kafka</span><span class="ski hi">BullMQ</span><span class="ski">Event-Driven Arch</span></div></div>
-      <div class="skb rv d1"><div class="skcat">Concepts</div><div class="skitems"><span class="ski hi">Distributed Systems</span><span class="ski hi">DB Sharding</span><span class="ski hi">RBAC / ABAC</span><span class="ski">Idempotent APIs</span><span class="ski">Microservices</span><span class="ski">REST API Design</span><span class="ski">CI/CD</span></div></div>
-      <div class="skb rv d2"><div class="skcat">Infra & Tools</div><div class="skitems"><span class="ski hi">Docker</span><span class="ski">Railway</span><span class="ski">Vercel</span><span class="ski">MongoDB Atlas</span><span class="ski">Upstash Redis</span><span class="ski">Git</span></div></div>
+      <div class="skb rv d1">
+        <div class="skcat">Languages</div>
+        <div class="skitems">
+          <span class="ski hi">Go (Golang)</span>
+          <span class="ski hi">TypeScript</span>
+          <span class="ski hi">Python</span>
+          <span class="ski">SQL</span>
+          <span class="ski">Java</span>
+        </div>
+      </div>
+      <div class="skb rv d2">
+        <div class="skcat">Backend &amp; Frameworks</div>
+        <div class="skitems">
+          <span class="ski hi">Go stdlib + pgx</span>
+          <span class="ski hi">NestJS</span>
+          <span class="ski">Node.js</span>
+          <span class="ski">Fastify</span>
+          <span class="ski">Express.js</span>
+          <span class="ski">OpenAPI / Swagger</span>
+          <span class="ski">SQLC</span>
+        </div>
+      </div>
+      <div class="skb rv d3">
+        <div class="skcat">Databases &amp; Caching</div>
+        <div class="skitems">
+          <span class="ski hi">PostgreSQL</span>
+          <span class="ski hi">Redis</span>
+          <span class="ski hi">MongoDB</span>
+          <span class="ski">PostGIS</span>
+          <span class="ski">PgBouncer</span>
+          <span class="ski">GORM</span>
+          <span class="ski">Prisma</span>
+          <span class="ski">Mongoose</span>
+        </div>
+      </div>
+      <div class="skb rv d4">
+        <div class="skcat">Messaging &amp; Orchestration</div>
+        <div class="skitems">
+          <span class="ski hi">Kafka</span>
+          <span class="ski hi">Temporal</span>
+          <span class="ski hi">RabbitMQ</span>
+          <span class="ski">BullMQ</span>
+          <span class="ski">Event-Driven Arch</span>
+        </div>
+      </div>
+      <div class="skb rv d1">
+        <div class="skcat">Auth &amp; Security</div>
+        <div class="skitems">
+          <span class="ski hi">Keycloak</span>
+          <span class="ski hi">RBAC / ABAC</span>
+          <span class="ski hi">PASETO v3</span>
+          <span class="ski">JWT</span>
+          <span class="ski">Kong API Gateway</span>
+          <span class="ski">PII Encryption</span>
+          <span class="ski">Passport.js</span>
+        </div>
+      </div>
+      <div class="skb rv d2">
+        <div class="skcat">Infra &amp; Tools</div>
+        <div class="skitems">
+          <span class="ski hi">Docker</span>
+          <span class="ski hi">AWS S3 / Secrets</span>
+          <span class="ski">GitHub Actions</span>
+          <span class="ski">Railway</span>
+          <span class="ski">Vercel</span>
+          <span class="ski">HAProxy</span>
+          <span class="ski">Git</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -480,6 +591,10 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
           GitHub
         </a>
+        <a href="https://portfolio-ecru-chi-51.vercel.app/" target="_blank" class="clink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Portfolio
+        </a>
       </div>
     </div>
   </div>
@@ -491,7 +606,6 @@
 </footer>
 
 <script>
-  // cursor
   const C=document.getElementById('c'),CR=document.getElementById('cr');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
@@ -505,7 +619,6 @@
     el.addEventListener('mouseenter',()=>CR.classList.add('on'));
     el.addEventListener('mouseleave',()=>CR.classList.remove('on'));
   });
-  // mouse glow
   document.querySelectorAll('.pcard').forEach(card=>{
     card.addEventListener('mousemove',e=>{
       const r=card.getBoundingClientRect();
@@ -513,10 +626,8 @@
       card.style.setProperty('--my',(e.clientY-r.top)+'px');
     });
   });
-  // scroll reveal
   const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.07});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-  // active nav
   document.querySelectorAll('section[id]').forEach(sec=>{
     new IntersectionObserver(entries=>{
       if(entries[0].isIntersecting){
@@ -526,7 +637,6 @@
       }
     },{threshold:.35}).observe(sec);
   });
-  // smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{
       const t=document.querySelector(a.getAttribute('href'));
